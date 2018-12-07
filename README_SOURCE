@@ -1,0 +1,11 @@
+go-streaming-video-websites /Go语言实现流媒体点播网站
+    |--deploy/ 部署配置
+        |--deploy
+            |--系统部署环境安装配置
+    |--api/ REST API
+        |--main.go
+            |--API入口
+        |--handles.go
+            |--注册API对应handlers
+        |--config/ 配置目录
+

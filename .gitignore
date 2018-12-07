@@ -1,3 +1,4 @@
+.idea/
 .idea/go-streaming-video-websites.iml
 .idea/misc.xml
 .idea/modules.xml
@@ -8,3 +9,9 @@ github.com
 
 *.bak
 *.a
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/2cecc445-f517-4948-b681-9174b695bd05.xml
+.idea/dataSources.xml
+.idea/dataSources.xml
+.idea/dataSources.xml

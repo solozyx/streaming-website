@@ -1,0 +1,16 @@
+【session】
+登录Facebook 只需要登录1次 之后关闭网页 重新打开网页还是登录状态
+标识用户valid状态的标识符
+web应用把session写在浏览器cookie中 有过期时间 做单向检查 或者 双向检查
+浏览器端做检查
+server端做检查
+用户登录后，server端返回sessionID
+用户每次访问通过该sessionID去server端检查
+
+session_id 登录次数是无限的自增长会有枯竭的时候用范围非常大的数 unsigned int
+TTL 过期时间 session过期给用户返回错误 打开页面就是匿名登录的
+login_name 用户名 session对应 用户ID也行
+
+session处理机制
+难点不是session表的设计
+而是整个流程机制处理，如何完成用session_id登录，如何session过期，session校验

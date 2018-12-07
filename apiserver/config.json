@@ -1,0 +1,15 @@
+{
+  "API接口服务端口":"提供增删改查REST API服务",
+  "apiPort":8000,
+
+  "API接口读超时":"单位 毫秒 ",
+  "apiReadTimeout":5000,
+
+  "API接口写超时":"单位 毫秒 ",
+  "apiWriteTimeout":5000,
+
+  "接口路由表":"REST API list",
+  "userRegister":"/user/register",
+  "userLogin":"/user/login"
+
+}

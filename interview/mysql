@@ -1,0 +1,14 @@
+sql.Open()
+调用数据库 sql.Open 会重复执行 虽然 sql.Open() 没有真正去连接数据库
+但是同样会造成connection浪费
+当并发量非常大访问量非常大 会出现半连接 半关闭 状态
+server会出现很多 close wait
+
+dbConn.Prepare(query string)
+预编译，安全避免数据库攻击
+
+stmtIns.Exec(loginName,pwd)
+// 提高性能 这里 不写 defer stmtIns.Close()
+stmtIns.Close()
+defer在栈退出的时候才会调用，性能会有些许损耗，写对性能要求非常严格的应用少用defer
+
