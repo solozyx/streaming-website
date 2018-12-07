@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
 	"fmt"
 )
 
@@ -22,6 +23,7 @@ func init(){
 	if err != nil {
 		goto ERR
 	}
+	return
 ERR:
 	fmt.Println(err.Error())
 }

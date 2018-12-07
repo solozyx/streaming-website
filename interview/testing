@@ -1,0 +1,7 @@
+init(dblogin,truncate tables) 每次跑测试表都是空的 初始化状态
+-->
+run tests
+-->
+clear data (truncate tables)
+避免test和其他包test相互干扰 清理数据-->测试-->清理数据
+
