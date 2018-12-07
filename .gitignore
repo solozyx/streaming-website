@@ -1,0 +1,10 @@
+.idea/go-streaming-video-websites.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+
+github.com
+
+*.bak
+*.a
