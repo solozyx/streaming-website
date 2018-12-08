@@ -1,3 +1,5 @@
+# mysql 5.5
+
 CREATE TABLE users
 (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -14,7 +16,7 @@ CREATE TABLE video_info
     author_id int,
     name text,
     display_ctime text,
-    create_time datetime
+    create_time timestamp DEFAULT NOW()
 );
 ALTER TABLE video_info COMMENT = '视频信息表';
 

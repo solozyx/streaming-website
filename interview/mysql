@@ -19,3 +19,16 @@ if _,err = stmtIns.Exec(loginName,pwd); err != nil {
 // 提高性能 这里 不写 defer stmtIns.Close()
 defer stmtIns.Close()
 
+// 防止撞库攻击 sql 不能使用 + 进行拼接
+//  "INSERT INTO video_info (id,author_id,name,display_ctime,create_time)" +
+//		" VALUES (?,?,?,?,?)" 错误
+var insertSql = `INSERT INTO video_info (id,author_id,name,display_ctime,create_time)
+		 VALUES (?,?,?,?,?)`
+
+
+mysql> ALTER TABLE video_info MODIFY column create_time datetime default CURRENT_TIMESTAMP;
+ERROR 1067 (42000): Invalid default value for 'create_time'
+
+https://blog.csdn.net/qq_37929849/article/details/78507210
+ALTER TABLE video_info MODIFY column create_time timestamp DEFAULT NOW();
+

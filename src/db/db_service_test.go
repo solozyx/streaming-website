@@ -14,6 +14,9 @@ clear data (truncate tables)
 避免test和其他包test相互干扰 清理数据-->测试-->清理数据
 */
 
+// 在整个test case没办法传参 用一个全局变量
+var tempvid string
+
 /*
 test初始化
 */
@@ -39,6 +42,15 @@ func TestUserWorkFlow(t *testing.T){
 	t.Run("Get",testGetUser)
 	t.Run("Delete",testDeleteUser)
 	t.Run("ReGet",testReGetUser)
+}
+
+func TestVideoWorkFlow(t *testing.T) {
+	clearTables()
+	t.Run("PrepareUser", testAddUser)
+	t.Run("AddVideo", testAddVideoInfo)
+	t.Run("GetVideo", testGetVideoInfo)
+	t.Run("DelVideo", testDeleteVideoInfo)
+	t.Run("RegetVideo", testRegetVideoInfo)
 }
 
 func testAddUser(t *testing.T) {
@@ -70,5 +82,35 @@ func testReGetUser(t *testing.T) {
 	}
 	if pwd != ""{
 		t.Errorf("mysql 删除 user 错误 %s",err)
+	}
+}
+
+func testAddVideoInfo(t *testing.T) {
+	vi, err := AddNewVideo(1, "my-video")
+	if err != nil {
+		t.Errorf("Error of AddVideoInfo: %v", err)
+	}
+	tempvid = vi.Id
+	fmt.Println("tempvid = ",tempvid)
+}
+
+func testGetVideoInfo(t *testing.T) {
+	_, err := GetVideoInfo(tempvid)
+	if err != nil {
+		t.Errorf("Error of GetVideoInfo: %v", err)
+	}
+}
+
+func testDeleteVideoInfo(t *testing.T) {
+	err := DeleteVideoInfo(tempvid)
+	if err != nil {
+		t.Errorf("Error of DeleteVideoInfo: %v", err)
+	}
+}
+
+func testRegetVideoInfo(t *testing.T) {
+	vi, err := GetVideoInfo(tempvid)
+	if err != nil || vi != nil{
+		t.Errorf("Error of RegetVideoInfo: %v", err)
 	}
 }

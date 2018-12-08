@@ -1,1 +1,53 @@
 main()放简单定义性内容 逻辑处理放到其他文件 分层设计模式
+
+mysql> show create database video_info;
++------------+---------------------------------------------------------------------+
+| Database   | Create Database                                                     |
++------------+---------------------------------------------------------------------+
+| video_info | CREATE DATABASE `video_info` /*!40100 DEFAULT CHARACTER SET utf8 */ |
++------------+---------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> describe users;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int(11)     | NO   | PRI | NULL    | auto_increment |
+| login_name | varchar(64) | YES  | UNI | NULL    |                |
+| pwd        | text        | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.14 sec)
+
+mysql> describe video_info;
++---------------+-------------+------+-----+-------------------+-------+
+| Field         | Type        | Null | Key | Default           | Extra |
++---------------+-------------+------+-----+-------------------+-------+
+| id            | varchar(64) | NO   | PRI | NULL              |       |
+| author_id     | int(11)     | YES  |     | NULL              |       |
+| name          | text        | YES  |     | NULL              |       |
+| display_ctime | text        | YES  |     | NULL              |       |
+| create_time   | timestamp   | NO   |     | CURRENT_TIMESTAMP |       |
++---------------+-------------+------+-----+-------------------+-------+
+5 rows in set (0.04 sec)
+
+mysql> describe comments;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | varchar(64) | NO   | PRI | NULL    |       |
+| video_id  | varchar(64) | YES  |     | NULL    |       |
+| author_id | int(11)     | YES  |     | NULL    |       |
+| content   | text        | YES  |     | NULL    |       |
+| time      | datetime    | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.03 sec)
+
+mysql> describe sessions;
++------------+----------+------+-----+---------+-------+
+| Field      | Type     | Null | Key | Default | Extra |
++------------+----------+------+-----+---------+-------+
+| session_id | tinytext | NO   |     | NULL    |       |
+| TTL        | tinytext | YES  |     | NULL    |       |
+| login_name | text     | YES  |     | NULL    |       |
++------------+----------+------+-----+---------+-------+
+3 rows in set (0.03 sec)

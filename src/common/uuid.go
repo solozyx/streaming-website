@@ -1,11 +1,15 @@
 package common
 
 import (
-	"crypto/rand"
 	"io"
+	"crypto/rand"
 	"fmt"
 )
 
+/*
+NOTICE : uuid 算法
+video comments 其他模块 都需要用到
+*/
 func NewUUID() (string, error) {
 	uuid := make([]byte, 16)
 	n, err := io.ReadFull(rand.Reader, uuid)
