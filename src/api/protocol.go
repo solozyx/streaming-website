@@ -1,4 +1,4 @@
-package common
+package api
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ type Response struct {
 	Data interface{} `json:"data"`
 }
 
-func BuildResponse(error int,msg string,data interface{})(resp []byte,err error){
+func buildResponse(error int,msg string,data interface{})(resp []byte,err error){
 	var(
 		response Response
 	)

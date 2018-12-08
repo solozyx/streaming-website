@@ -1,10 +1,5 @@
 package api
 
-type UserCredential struct {
-	Username string `json:"user_name"`
-	Pwd string `json:"pwd"`
-}
-
 type Err struct{
 	Error string `json:"error"`
 	ErrorCode string `json:"error_code"`

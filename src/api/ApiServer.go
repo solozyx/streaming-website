@@ -6,7 +6,6 @@ import (
 	"time"
 	"strconv"
 	"config"
-	"common"
 )
 
 var (
@@ -47,12 +46,12 @@ func handleUserRegister(resp http.ResponseWriter, req *http.Request){
 	if err = req.ParseForm(); err != nil {
 		goto ERR
 	}
-	if bytes,err = common.BuildResponse(0,"success","success"); err == nil{
+	if bytes,err = buildResponse(0,"success","success"); err == nil{
 		resp.Write(bytes)
 	}
 	return
 ERR:
-	if bytes,err = common.BuildResponse(-1,err.Error(),nil); err == nil{
+	if bytes,err = buildResponse(-1,err.Error(),nil); err == nil{
 		resp.Write(bytes)
 	}
 }
@@ -67,12 +66,12 @@ func handleUserLogin(resp http.ResponseWriter, req *http.Request){
 		goto ERR
 	}
 	user_name = req.PostForm.Get("user_name")
-	if bytes,err = common.BuildResponse(0,"success",user_name); err == nil{
+	if bytes,err = buildResponse(0,"success",user_name); err == nil{
 		resp.Write(bytes)
 	}
 	return
 ERR:
-	if bytes,err = common.BuildResponse(-1,err.Error(),nil); err == nil{
+	if bytes,err = buildResponse(-1,err.Error(),nil); err == nil{
 		resp.Write(bytes)
 	}
 }

@@ -12,3 +12,10 @@ stmtIns.Exec(loginName,pwd)
 stmtIns.Close()
 defer在栈退出的时候才会调用，性能会有些许损耗，写对性能要求非常严格的应用少用defer
 
+if _,err = stmtIns.Exec(loginName,pwd); err != nil {
+	// 这里return后 stmtIns.Close() 执行不到 导致对象越开越多 需要使用 defer
+	return
+}
+// 提高性能 这里 不写 defer stmtIns.Close()
+defer stmtIns.Close()
+
