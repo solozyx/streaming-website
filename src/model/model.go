@@ -23,3 +23,17 @@ type VideoInfo struct{
 	// 在逻辑层意义不大 只在database操作中有意义 不在model定义
 	// CreateTime
 }
+
+/*
+comment
+*/
+type Comment struct{
+	// 评论Id
+	Id string
+	// 视频Id
+	VideoId string
+	// 作者名
+	Author string
+	// 评论内容
+	Content string
+}

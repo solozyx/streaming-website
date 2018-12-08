@@ -31,4 +31,25 @@ ERROR 1067 (42000): Invalid default value for 'create_time'
 
 https://blog.csdn.net/qq_37929849/article/details/78507210
 ALTER TABLE video_info MODIFY column create_time timestamp DEFAULT NOW();
+ALTER TABLE comments   MODIFY column time        timestamp DEFAULT NOW();
+
+
+func ListComments(vid string, from, to int) (commentList []*model.Comment, err error) {
+	var querySql = ` SELECT comments.id, users.Login_name, comments.content
+ 					  FROM comments INNER JOIN users
+ 					  ON comments.author_id = users.id
+					  WHERE comments.video_id = ?
+					  AND comments.time > FROM_UNIXTIME(?)
+					  AND comments.time <= FROM_UNIXTIME(?)`
+}
+
+comments.time > FROM_UNIXTIME(?) AND comments.time <= FROM_UNIXTIME(?)`
+
+开始时间用 开区间
+结束时间用 闭区间
+从1970年开始取，取最早的一条，往早取永远都可以去到最早的一条
+往晚取，如果不是闭区间 FROM_UNIXTIME 只精确到秒
+如果在这一秒写入 1个记录 同时在这一秒查询
+如果往晚取是开区间 租后1条记录可能漏掉
+一般早时间开区间 晚时间闭区间 (早 晚]
 

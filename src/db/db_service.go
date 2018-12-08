@@ -183,3 +183,64 @@ func DeleteVideoInfo(vid string) (err error){
 	defer stmtDel.Close()
 	return
 }
+
+/*
+增加评论
+@param  vid video id string
+@param  aid author id int
+@param  content 评论内容 string
+@return err
+*/
+func AddNewComments(vid string, aid int, content string) (err error) {
+	var(
+		cid string
+		stmtIns *sql.Stmt
+	)
+	if cid,err = common.NewUUID(); err != nil {
+		return
+	}
+	var insertSql = "INSERT INTO comments (id, video_id, author_id, content) values (?, ?, ?, ?)"
+	if stmtIns, err = dbConn.Prepare(insertSql); err != nil{
+		return
+	}
+	if _, err = stmtIns.Exec(cid, vid, aid, content); err != nil {
+		return
+	}
+	defer stmtIns.Close()
+	return
+}
+
+/*
+查询评论
+*/
+func ListComments(vid string, from, to int) (commentList []*model.Comment, err error) {
+	var(
+		stmtOut *sql.Stmt
+		rows *sql.Rows
+		comment *model.Comment
+	)
+	commentList = make([]*model.Comment,0)
+	var querySql = ` SELECT comments.id, users.login_name, comments.content 
+ 					  FROM comments INNER JOIN users 
+ 					  ON comments.author_id = users.id
+					  WHERE comments.video_id = ? 
+					  AND comments.time > FROM_UNIXTIME(?) 
+					  AND comments.time <= FROM_UNIXTIME(?)`
+	if stmtOut,err = dbConn.Prepare(querySql); err != nil{
+		log.Printf("mysql 查询 comments 表 失败 %s",err.Error())
+		return
+	}
+	if rows, err = stmtOut.Query(vid, from, to); err != nil {
+		return
+	}
+	for rows.Next() {
+		var c_id, login_name, c_content string
+		if err = rows.Scan(&c_id, &login_name, &c_content); err != nil {
+			return
+		}
+		comment = &model.Comment{Id: c_id, VideoId: vid, Author: login_name, Content: c_content}
+		commentList = append(commentList, comment)
+	}
+	defer stmtOut.Close()
+	return
+}

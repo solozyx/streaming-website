@@ -8,3 +8,15 @@ t = time.Now()
 //
 ctime = t.Format("Jan 02 2006, 15:04:05")
 
+评论
+一般只有增加查询，评论一让不能删除和修改
+
+func ListComments(vid string, from, to int) (commentList []*model.Comment, err error) {
+	// 返回参数列表 (commentList []*model.Comment,err error) 声明了一个slice 是nil空指针
+	// 需要make空间初始化 长度为0的slice不是nil
+	// NOTICE 后续调用者只需要判断 commentList的长度是否0 不需要判断它是否nil空指针 简化调用者判断复杂性
+	// len(commentList) == 0
+	commentList = make([]*model.Comment,0)
+	...
+}
+

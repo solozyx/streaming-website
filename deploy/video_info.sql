@@ -1,4 +1,4 @@
-# mysql 5.5
+# mysql 5.5 version
 
 CREATE TABLE users
 (
@@ -26,7 +26,7 @@ CREATE TABLE comments
     video_id varchar(64),
     author_id int,
     content text,
-    time datetime
+    time timestamp DEFAULT NOW()
 );
 ALTER TABLE comments COMMENT = '视频评论表';
 

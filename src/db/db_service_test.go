@@ -3,6 +3,8 @@ package db
 import (
 	"testing"
 	"fmt"
+	"strconv"
+	"time"
 )
 
 /*
@@ -51,6 +53,13 @@ func TestVideoWorkFlow(t *testing.T) {
 	t.Run("GetVideo", testGetVideoInfo)
 	t.Run("DelVideo", testDeleteVideoInfo)
 	t.Run("RegetVideo", testRegetVideoInfo)
+}
+
+func TestComments(t *testing.T) {
+	clearTables()
+	t.Run("AddUser", testAddUser)
+	t.Run("AddCommnets", testAddComments)
+	t.Run("ListComments", testListComments)
 }
 
 func testAddUser(t *testing.T) {
@@ -114,3 +123,67 @@ func testRegetVideoInfo(t *testing.T) {
 		t.Errorf("Error of RegetVideoInfo: %v", err)
 	}
 }
+
+func testAddComments(t *testing.T) {
+	vid := "12345"
+	aid := 1
+	content := "I like this video"
+	err := AddNewComments(vid, aid, content)
+	if err != nil {
+		t.Errorf("Error of AddComments: %v", err)
+	}
+}
+
+func testListComments(t *testing.T) {
+	vid := "12345"
+	// 2周前的一个随机时间
+	from := 1514764800
+	to, _ := strconv.Atoi(strconv.FormatInt(time.Now().UnixNano()/(1000*1000*1000), 10))
+	res, err := ListComments(vid, from, to)
+	if err != nil {
+		t.Errorf("Error of ListComments: %v", err)
+	}
+	for i, ele := range res {
+		// 在test case中不应该 fmt.Printf 打印结果
+		// 需要使用另外的机制 判断 是否与预期结果一致
+		// 这里简化处理 直接打印结果
+		fmt.Printf("comment: %d, %v \n", i, ele)
+	}
+}
+
+/*
+C:\goenv\githubProj\go-streaming-video-websites\src\db>go test -v
+=== RUN   TestUserWorkFlow
+=== RUN   TestUserWorkFlow/Add
+=== RUN   TestUserWorkFlow/Get
+pwd =  123
+=== RUN   TestUserWorkFlow/Delete
+=== RUN   TestUserWorkFlow/ReGet
+--- PASS: TestUserWorkFlow (0.05s)
+    --- PASS: TestUserWorkFlow/Add (0.02s)
+    --- PASS: TestUserWorkFlow/Get (0.00s)
+    --- PASS: TestUserWorkFlow/Delete (0.02s)
+    --- PASS: TestUserWorkFlow/ReGet (0.00s)
+=== RUN   TestVideoWorkFlow
+=== RUN   TestVideoWorkFlow/PrepareUser
+=== RUN   TestVideoWorkFlow/AddVideo
+tempvid =  51af7f37-6836-4761-bb11-10a90ef71a06
+=== RUN   TestVideoWorkFlow/GetVideo
+=== RUN   TestVideoWorkFlow/DelVideo
+=== RUN   TestVideoWorkFlow/RegetVideo
+--- PASS: TestVideoWorkFlow (0.19s)
+    --- PASS: TestVideoWorkFlow/PrepareUser (0.02s)
+    --- PASS: TestVideoWorkFlow/AddVideo (0.04s)
+    --- PASS: TestVideoWorkFlow/GetVideo (0.00s)
+    --- PASS: TestVideoWorkFlow/DelVideo (0.02s)
+    --- PASS: TestVideoWorkFlow/RegetVideo (0.00s)
+=== RUN   TestComments
+=== RUN   TestComments/AddUser
+=== RUN   TestComments/AddCommnets
+=== RUN   TestComments/ListComments
+comment: 0, &{36c4d188-af70-4378-be5f-53b8ee5be456 12345 solozyx I like this video}
+--- PASS: TestComments (0.15s)
+    --- PASS: TestComments/AddUser (0.02s)
+    --- PASS: TestComments/AddCommnets (0.02s)
+
+*/

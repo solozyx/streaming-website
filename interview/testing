@@ -8,3 +8,6 @@ clear data (truncate tables)
 // 在整个test case没办法传参 用一个全局变量
 var tempvid string
 
+go test
+go test -v
+
