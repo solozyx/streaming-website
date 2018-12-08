@@ -37,3 +37,19 @@ type Comment struct{
 	// 评论内容
 	Content string
 }
+
+/*
+session 是否过期 存储
+1.服务启动初始化/重启 从db获取session 到api节点的cache
+2.新用户注册/未登录老用户登录 需要新分配 session_id
+3.session过期返回过期状态 未过期返回未过期状态
+
+NOTICE 没有修改session功能 一个session写入了有固定的session_id 和 TTL
+修改会对业务复杂度造成冲击 所以session不支持修改
+*/
+type SimpleSession struct{
+	// users.login_name
+	Username string
+	// 校验session是否过期
+	TTL int64
+}

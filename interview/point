@@ -20,3 +20,20 @@ func ListComments(vid string, from, to int) (commentList []*model.Comment, err e
 	...
 }
 
+var(
+	// cache 外部Redis mongodb 一个系统增加模块和服务系统复杂度会增加
+	// 引入第三方cache带来的好处 小于 开发增量 反而会成为负担
+	// 所以本系统没有必要采用Redis session是和用户登录相关的
+	// 数据量有限 使用go内置缓存足够
+	//
+	// sync.Map in_memory缓存 是 go1.9 加入的 在 1.9之前 使用 传统 buildin Map
+	// 传统Map非常大的缺点 不支持并发读写 超过2个以上的协程同时并发去读写Map就会panic
+	// 使用传统Map要加锁 非常不方便 开发者给社会提了多年意见 增加线程安全的Map
+	// 在 1.9加入了 sync.Map 自己实现了线程安全机制 尤其在读上 并发读优化的非常极致
+	// 即使 上千并发 上万并发 sync.Map 读取都十分平稳
+	// 但是在并发写上 会有问题 并发写 不会报 key conflict 冲突 每次写都加 全局锁 耗时
+	// 并发读 并发写 都好的东西 也不容易做到 综合起来 sync.Map 在并发读写表现可以接受
+	// 如果用单协程访问 sync.Map 效率的提升并不明显
+	sessionMap *sync.Map
+)
+
