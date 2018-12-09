@@ -8,4 +8,14 @@ go-streaming-video-websites /Go语言实现流媒体点播网站
         |--handles.go
             |--注册API对应handlers
         |--config/ 配置目录
-
+...
+    |--streamserver/ 流媒体服务 不和db交互 没有session
+        |--streamserver.go
+            |--启动服务
+        |--streamserver.json
+            |--配置
+...
+    |--src/
+        |--streamserver/
+            |--StreamServer.go 流媒体服务API
+            |--flowlimit.go 流控模块 buffer channel 实现令牌桶流控算法
