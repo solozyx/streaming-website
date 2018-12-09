@@ -6,6 +6,11 @@ import (
 	"time"
 	"strconv"
 	"config"
+	"session"
+	"io/ioutil"
+	"model"
+	"encoding/json"
+	"db"
 )
 
 var (
@@ -24,7 +29,6 @@ func InitApiServer() (err error){
 	)
 	mux = http.NewServeMux()
 	mux.HandleFunc(config.G_config.ApiUserRegister,handleUserRegister)
-	mux.HandleFunc(config.G_config.ApiUserLogin,handleUserLogin)
 	if listener,err = net.Listen("tcp",":" + strconv.Itoa(config.G_config.ApiPort)); err != nil {
 		return
 	}
@@ -41,37 +45,33 @@ func InitApiServer() (err error){
 func handleUserRegister(resp http.ResponseWriter, req *http.Request){
 	var(
 		err error
-		bytes []byte
+		inputBytes []byte
+		uc *model.UserCredential
+		session_id string
+		signUpResp *model.SignedUp
+		outputBytes []byte
 	)
-	if err = req.ParseForm(); err != nil {
-		goto ERR
+	// req.Body
+	inputBytes,_ = ioutil.ReadAll(req.Body)
+	uc = &model.UserCredential{}
+	if err = json.Unmarshal(inputBytes,uc); err != nil{
+		sendErrorResponse(resp,model.ErrorRequestBodyParseFailed)
+		return
 	}
-	if bytes,err = buildResponse(0,"success","success"); err == nil{
-		resp.Write(bytes)
+	// regiter user to db
+	// TODO pwd 加密处理
+	if err = db.AddUserCredential(uc.Username,uc.Pwd); err != nil {
+		sendErrorResponse(resp,model.ErrorDBError)
+		return
 	}
-	return
-ERR:
-	if bytes,err = buildResponse(-1,err.Error(),nil); err == nil{
-		resp.Write(bytes)
-	}
-}
-
-func handleUserLogin(resp http.ResponseWriter, req *http.Request){
-	var(
-		err error
-		bytes []byte
-		user_name string
-	)
-	if err = req.ParseForm(); err != nil {
-		goto ERR
-	}
-	user_name = req.PostForm.Get("user_name")
-	if bytes,err = buildResponse(0,"success",user_name); err == nil{
-		resp.Write(bytes)
-	}
-	return
-ERR:
-	if bytes,err = buildResponse(-1,err.Error(),nil); err == nil{
-		resp.Write(bytes)
+	// create session_id to user
+	session_id = session.GenerateNewSessionId(uc.Username)
+	signUpResp = &model.SignedUp{Success:true,SessionId:session_id}
+	if outputBytes,err = json.Marshal(signUpResp); err != nil{
+		sendErrorResponse(resp,model.ErrorInternalFaults)
+		return
+	} else {
+		// 201 表示用户注册成功
+		sendNormalResponse(resp,outputBytes,201)
 	}
 }

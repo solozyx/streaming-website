@@ -48,3 +48,8 @@ session可以存储很多复杂的东西
 db读写压力 在网页访问比较大的时候
 db操作对IO消耗大 尽可能减少db操作 所以需要用cache 保证多读少写的情况下 加快访问速度
 
+// check session
+if isUserSessionValid = session.ValidateUserSession(req); !isUserSessionValid {
+	return
+}
+

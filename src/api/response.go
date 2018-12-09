@@ -1,36 +1,22 @@
 package api
 
-type Err struct{
-	Error string `json:"error"`
-	ErrorCode string `json:"error_code"`
-}
-
-type ErrResponse struct{
-	HttpSC int
-	Error Err
-}
-
-var(
-	ErrorRequestBodyParseFailed = ErrResponse{
-		HttpSC:400,
-		Error:Err{
-			Error:"request body is not correct",
-			ErrorCode:"001",
-		},
-	}
-	ErrorNotAuthUser = ErrResponse{
-		HttpSC:401,
-		Error:Err{
-			Error:"user authentication failed",
-			ErrorCode:"002",
-		},
-	}
+import (
+	"net/http"
+	"model"
+	"encoding/json"
 )
 
-func SendErrorResponse(){
-
+func sendErrorResponse(resp http.ResponseWriter,errResp model.ErrResponse){
+	var(
+		respJsonBytes []byte
+	)
+	resp.WriteHeader(errResp.HttpRespStatusCode)
+	respJsonBytes,_ = json.Marshal(errResp.Error)
+	resp.Write(respJsonBytes)
+	// io.WriteString(resp,string(respJsonBytes))
 }
 
-func SendNormalResponse(){
-
+func sendNormalResponse(resp http.ResponseWriter,respBytes []byte, statusCode int){
+	resp.WriteHeader(statusCode)
+	resp.Write(respBytes)
 }
