@@ -6,6 +6,10 @@ import (
 	"time"
 	"strconv"
 	"os"
+	"mime/multipart"
+	"io/ioutil"
+	"log"
+	"html/template"
 )
 
 var (
@@ -38,6 +42,7 @@ func InitStreamServer() (err error){
 	mux = http.NewServeMux()
 	mux.HandleFunc("/videos",handleStreaming)
 	mux.HandleFunc("/upload",handleUpload)
+	mux.HandleFunc("/testpage",handleTestPage)
 	// bucket token flow limit
 	m = NewMiddleWareHandler(VIDEO_LIMIT)
 	// listen and serve
@@ -87,6 +92,7 @@ func handleStreaming(resp http.ResponseWriter, req *http.Request){
 	// open static video file
 	// TODO 是否需要 buffer io 优化
 	if video,err = os.Open(videoLink); err != nil{
+		log.Printf(LOG_SERVER_OPEN_FILE_ERR)
 		sendErrorResponse(resp,http.StatusInternalServerError,ERR_INTERNAL)
 		return
 	}
@@ -104,10 +110,60 @@ func handleStreaming(resp http.ResponseWriter, req *http.Request){
 }
 
 /*
-
+client static video file --> streaming --> server
 */
 func handleUpload(resp http.ResponseWriter, req *http.Request){
+	var(
+		err error
+		file multipart.File
+		data []byte
+		fileName string
+		path string
+	)
 
+	// bucket token flow limit
+	if !G_streamServer.middleWareHandler.connLimiter.GetConn(){
+		sendErrorResponse(resp,http.StatusTooManyRequests,ERR_TOO_MANY_REQUESTS)
+		return
+	}
+	defer G_streamServer.middleWareHandler.connLimiter.ReleaseConn()
+
+	// http.MaxBytesReader 限制 io.Reader 最大读取字节 byte 不是 bit
+	req.Body = http.MaxBytesReader(resp,req.Body,MAX_UPLOAD_SIZE)
+	// 解析表单
+	if err = req.ParseMultipartForm(MAX_UPLOAD_SIZE); err != nil {
+		sendErrorResponse(resp,http.StatusBadRequest,ERR_UPLOAD_FILR_TOO_BIG)
+		return
+	}
+	// <form name="FormFile key 设置为 file 前端页面需要写好该key ">
+	// TODO *multipart.FileHeader 可以验证文件类型 可以在前端页面做验证
+	// accept="video/*"
+	if file,_,err = req.FormFile("file"); err != nil {
+		sendErrorResponse(resp,http.StatusInternalServerError,ERR_INTERNAL)
+		return
+	}
+	if data ,err = ioutil.ReadAll(file); err != nil {
+		log.Printf(LOG_SERVER_READ_FILE_ERR)
+		sendErrorResponse(resp,http.StatusInternalServerError,ERR_INTERNAL)
+		return
+	}
+	fileName = req.Form.Get("vid")
+	path = VIDEO_DIR + fileName
+	// 上传文件写入server端磁盘 尽量不用 0777 权限过大 可执行文件就可怕了
+	if err = ioutil.WriteFile(path,data,0666); err != nil {
+		log.Printf(LOG_SERVER_WRITE_FILE_ERR + " " + path)
+		sendErrorResponse(resp,http.StatusInternalServerError,ERR_INTERNAL)
+		return
+	}
+	// send correct response
+	log.Printf(LOG_SERVER_UPLOAD_FILE_SUCCESS)
+	resp.WriteHeader(http.StatusCreated) // 201
+	resp.Write([]byte(LOG_SERVER_UPLOAD_FILE_SUCCESS))
+}
+
+func handleTestPage(resp http.ResponseWriter, req *http.Request){
+	t,_ := template.ParseFiles(PAGE_TEST_UPLOAD_FILE)
+	t.Execute(resp,nil)
 }
 
 /*

@@ -63,3 +63,7 @@ func handleStreaming(resp http.ResponseWriter, req *http.Request){
 	defer video.Close()
 }
 
+fileName = req.PostForm.Get("vid")
+// 上传文件写入server端磁盘 尽量不用 0777 权限过大 可执行文件就可怕了
+err = ioutil.WriteFile(VIDEO_DIR + fileName,data,0666)
+
