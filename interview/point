@@ -37,3 +37,6 @@ var(
 	sessionMap *sync.Map
 )
 
+block阻塞1个协程,不让它执行完退出 2 种方式
+1.for{死循环}
+2.无buffer channel 不往channel写数据 直接从channel读数据
