@@ -1,0 +1,37 @@
+// Windows宿主机 127.0.0.1 Win版本地数据库
+
+C:\goenv\githubProj\streaming-website\src\db>go test -v
+
+=== RUN   TestUserWorkFlow
+=== RUN   TestUserWorkFlow/Add
+=== RUN   TestUserWorkFlow/Get
+pwd =  123
+=== RUN   TestUserWorkFlow/Delete
+=== RUN   TestUserWorkFlow/ReGet
+--- PASS: TestUserWorkFlow (0.05s)
+    --- PASS: TestUserWorkFlow/Add (0.02s)
+    --- PASS: TestUserWorkFlow/Get (0.00s)
+    --- PASS: TestUserWorkFlow/Delete (0.02s)
+    --- PASS: TestUserWorkFlow/ReGet (0.00s)
+=== RUN   TestVideoWorkFlow
+=== RUN   TestVideoWorkFlow/PrepareUser
+=== RUN   TestVideoWorkFlow/AddVideo
+tempvid =  51af7f37-6836-4761-bb11-10a90ef71a06
+=== RUN   TestVideoWorkFlow/GetVideo
+=== RUN   TestVideoWorkFlow/DelVideo
+=== RUN   TestVideoWorkFlow/RegetVideo
+--- PASS: TestVideoWorkFlow (0.19s)
+    --- PASS: TestVideoWorkFlow/PrepareUser (0.02s)
+    --- PASS: TestVideoWorkFlow/AddVideo (0.04s)
+    --- PASS: TestVideoWorkFlow/GetVideo (0.00s)
+    --- PASS: TestVideoWorkFlow/DelVideo (0.02s)
+    --- PASS: TestVideoWorkFlow/RegetVideo (0.00s)
+=== RUN   TestComments
+=== RUN   TestComments/AddUser
+=== RUN   TestComments/AddCommnets
+=== RUN   TestComments/ListComments
+comment: 0, &{36c4d188-af70-4378-be5f-53b8ee5be456 12345 solozyx I like this video}
+--- PASS: TestComments (0.15s)
+    --- PASS: TestComments/AddUser (0.02s)
+    --- PASS: TestComments/AddCommnets (0.02s)
+

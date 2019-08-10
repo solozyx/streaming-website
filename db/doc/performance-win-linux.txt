@@ -1,0 +1,44 @@
+// Windows宿主机 连接VMware安装CentOS7 虚拟机
+
+GOROOT=C:\blockchainenv\Go #gosetup
+GOPATH=C:\blockchainenv\githubProj\go-streaming-website;C:\Users\solozyx\go #gosetup
+C:\blockchainenv\Go\bin\go.exe test -c -o C:\Users\solozyx\AppData\Local\Temp\___go_test_streaming_website_db.exe streaming-website/db #gosetup
+C:\blockchainenv\GoLand\bin\runnerw64.exe C:\blockchainenv\Go\bin\go.exe tool test2json -t C:\Users\solozyx\AppData\Local\Temp\___go_test_streaming_website_db.exe -test.v #gosetup
+
+=== RUN   TestUserWorkFlow
+--- PASS: TestUserWorkFlow (0.28s)
+=== RUN   TestUserWorkFlow/Add
+    --- PASS: TestUserWorkFlow/Add (0.07s)
+=== RUN   TestUserWorkFlow/Get
+pwd =  123
+    --- PASS: TestUserWorkFlow/Get (0.04s)
+=== RUN   TestUserWorkFlow/Delete
+    --- PASS: TestUserWorkFlow/Delete (0.13s)
+=== RUN   TestUserWorkFlow/ReGet
+    --- PASS: TestUserWorkFlow/ReGet (0.04s)
+=== RUN   TestVideoWorkFlow
+--- PASS: TestVideoWorkFlow (0.66s)
+=== RUN   TestVideoWorkFlow/PrepareUser
+    --- PASS: TestVideoWorkFlow/PrepareUser (0.03s)
+=== RUN   TestVideoWorkFlow/AddVideo
+tempvid =  0e2a6233-5064-4d9b-be9c-1e45220a15a2
+    --- PASS: TestVideoWorkFlow/AddVideo (0.12s)
+=== RUN   TestVideoWorkFlow/GetVideo
+    --- PASS: TestVideoWorkFlow/GetVideo (0.01s)
+=== RUN   TestVideoWorkFlow/DelVideo
+    --- PASS: TestVideoWorkFlow/DelVideo (0.02s)
+=== RUN   TestVideoWorkFlow/RegetVideo
+    --- PASS: TestVideoWorkFlow/RegetVideo (0.01s)
+=== RUN   TestComments
+--- PASS: TestComments (0.35s)
+=== RUN   TestComments/AddUser
+    --- PASS: TestComments/AddUser (0.01s)
+=== RUN   TestComments/AddCommnets
+    --- PASS: TestComments/AddCommnets (0.07s)
+=== RUN   TestComments/ListComments
+comment: 0, &{4f8ffeef-a0d9-453b-80cf-0360d468f01e 12345 solozyx I like this video}
+    --- PASS: TestComments/ListComments (0.08s)
+PASS
+
+Process finished with exit code 0
+
