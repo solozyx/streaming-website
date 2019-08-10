@@ -1,4 +1,0 @@
-go-streaming-video-websites / export GOPATH=`pwd`
-
-go get github.com/julienschmidt/httprouter
-

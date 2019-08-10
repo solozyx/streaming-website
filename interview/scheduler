@@ -1,6 +1,0 @@
-
-go channel 实现 MQ message queue
-
-【channel select选择器】
-和linux系统的select机制相同
-异步地不断接收channel发过来的数据
