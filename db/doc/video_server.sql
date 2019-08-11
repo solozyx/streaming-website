@@ -34,3 +34,8 @@ CREATE TABLE `sessions`(
     `login_name` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
     PRIMARY key (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登录session表';
+
+CREATE TABLE `video_del_info`(
+    `video_id` varchar(64) NOT NULL DEFAULT '' COMMENT '要删除的视频唯一标识',
+    PRIMARY KEY (`video_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='要删除视频表';
