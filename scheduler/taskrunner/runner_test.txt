@@ -1,0 +1,66 @@
+
+=== RUN   TestRunner
+2019/08/11 17:36:54 Dispatcher send: 0
+2019/08/11 17:36:54 Dispatcher send: 1
+2019/08/11 17:36:54 Dispatcher send: 2
+2019/08/11 17:36:54 Dispatcher send: 3
+2019/08/11 17:36:54 Dispatcher send: 4
+2019/08/11 17:36:54 Dispatcher send: 5
+2019/08/11 17:36:54 Dispatcher send: 6
+2019/08/11 17:36:54 Dispatcher send: 7
+2019/08/11 17:36:54 Dispatcher send: 8
+2019/08/11 17:36:54 Dispatcher send: 9
+2019/08/11 17:36:54 Dispatcher send: 10
+2019/08/11 17:36:54 Dispatcher send: 11
+2019/08/11 17:36:54 Dispatcher send: 12
+2019/08/11 17:36:54 Dispatcher send: 13
+2019/08/11 17:36:54 Dispatcher send: 14
+2019/08/11 17:36:54 Dispatcher send: 15
+2019/08/11 17:36:54 Dispatcher send: 16
+2019/08/11 17:36:54 Dispatcher send: 17
+2019/08/11 17:36:54 Dispatcher send: 18
+2019/08/11 17:36:54 Dispatcher send: 19
+2019/08/11 17:36:54 Dispatcher send: 20
+2019/08/11 17:36:54 Dispatcher send: 21
+2019/08/11 17:36:54 Dispatcher send: 22
+2019/08/11 17:36:54 Dispatcher send: 23
+2019/08/11 17:36:54 Dispatcher send: 24
+2019/08/11 17:36:54 Dispatcher send: 25
+2019/08/11 17:36:54 Dispatcher send: 26
+2019/08/11 17:36:54 Dispatcher send: 27
+2019/08/11 17:36:54 Dispatcher send: 28
+2019/08/11 17:36:54 Dispatcher send: 29
+2019/08/11 17:36:54 Executor receive: 0
+2019/08/11 17:36:54 Executor receive: 1
+2019/08/11 17:36:54 Executor receive: 2
+2019/08/11 17:36:54 Executor receive: 3
+2019/08/11 17:36:54 Executor receive: 4
+2019/08/11 17:36:54 Executor receive: 5
+2019/08/11 17:36:54 Executor receive: 6
+2019/08/11 17:36:54 Executor receive: 7
+2019/08/11 17:36:54 Executor receive: 8
+2019/08/11 17:36:54 Executor receive: 9
+2019/08/11 17:36:54 Executor receive: 10
+2019/08/11 17:36:54 Executor receive: 11
+2019/08/11 17:36:54 Executor receive: 12
+2019/08/11 17:36:54 Executor receive: 13
+2019/08/11 17:36:54 Executor receive: 14
+2019/08/11 17:36:54 Executor receive: 15
+2019/08/11 17:36:54 Executor receive: 16
+2019/08/11 17:36:54 Executor receive: 17
+2019/08/11 17:36:54 Executor receive: 18
+2019/08/11 17:36:54 Executor receive: 19
+2019/08/11 17:36:54 Executor receive: 20
+2019/08/11 17:36:54 Executor receive: 21
+2019/08/11 17:36:54 Executor receive: 22
+2019/08/11 17:36:54 Executor receive: 23
+2019/08/11 17:36:54 Executor receive: 24
+2019/08/11 17:36:54 Executor receive: 25
+2019/08/11 17:36:54 Executor receive: 26
+2019/08/11 17:36:54 Executor receive: 27
+2019/08/11 17:36:54 Executor receive: 28
+2019/08/11 17:36:54 Executor receive: 29
+--- PASS: TestRunner (3.00s)
+PASS
+
+Process finished with exit code 0
